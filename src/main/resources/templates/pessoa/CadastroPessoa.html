@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="/layout/LayoutPadrao">
+
+<head>
+<title>Cadastro de pessoa</title>
+</head>
+
+<section layout:fragment="conteudo">
+	<form class="form-horizontal" method="POST" th:action="@{/pessoas}"
+		th:object="${pessoa}">
+		<div layout:include="/mensagem/MensagemGeral"></div>
+		<div layout:include="/mensagem/MensagemErro"></div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<div class="clearfix">
+					<h1 class="panel-title aw-titulo-panel">
+						<strong>Pessoa</strong>
+					</h1>
+					<a class="btn btn-link aw-link-panel" th:href="@{/pessoas}">Voltar
+						para pesquisa</a>
+				</div>
+			</div>
+
+			<div class="panel-body">
+				<input type="hidden" th:field="*{idPessoa}" />
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('nome')} ? has-error">
+					<label for="nome" class="col-sm-2 control-label">Nome</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="nome"
+							th:field="*{nome}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="sexo" class="col-sm-2 control-label">Sexo</label>
+					<div class="col-sm-2">
+						<select class="form-control" name="sexo" th:field="*{sexo}">
+							<option th:each="sexos : ${todosSexos}" th:value="${sexos}"
+								th:text="${sexos.descricao}"></option>
+						</select>
+					</div>
+				</div>
+
+				<!-- Bloco visivel -->
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('dataNascimento')} ? has-error">
+					<label for="dataNascimento" class="col-sm-2 control-label">Data
+						de nascimento</label>
+					<div class="col-sm-2">
+						<input type="text" class="form-control" id="dataNascimento"
+							th:field="*{dataNascimento}" data-provide="datepicker"
+							data-date-format="dd/mm/yyyy" data-date-language="pt-BR"
+							data-date-autoclose="true" data-date-today-highlight="true"
+							data-date-orientation="bottom" />
+					</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('naturalidade')} ? has-error">
+					<label for="naturalidade" class="col-sm-2 control-label">Naturalidade</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="naturalidade"
+							th:field="*{naturalidade}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="estadoCivil" class="col-sm-2 control-label">Estado
+						Civil</label>
+					<div class="col-sm-2">
+						<select class="form-control" name="estadoCivil"
+							th:field="*{estadoCivil}">
+							<option th:each="estadosCivis : ${todosEstadosCivis}"
+								th:value="${estadosCivis}" th:text="${estadosCivis.descricao}"></option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('nomePai')} ? has-error">
+					<label for="nomePai" class="col-sm-2 control-label">Nome do
+						Pai</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="nomePai"
+							th:field="*{nomePai}" />
+					</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('nomeMae')} ? has-error">
+					<label for="nomeMae" class="col-sm-2 control-label">Nome da
+						Mãe</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="nomeMae"
+							th:field="*{nomeMae}" />
+					</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('profissao')} ? has-error">
+					<label for="profissao" class="col-sm-2 control-label">Profissão</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="profissao"
+							th:field="*{profissao}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="escolaridade" class="col-sm-2 control-label">Escolaridade</label>
+					<div class="col-sm-3">
+						<select class="form-control" name="escolaridade"
+							th:field="*{escolaridade}">
+							<option th:each="escolaridades : ${todasEscolaridades}"
+								th:value="${escolaridades}" th:text="${escolaridades.descricao}"></option>
+						</select>
+					</div>
+				</div>
+				<!-- FIM - Bloco visivel -->
+
+				<!-- Botoes Collapse -->
+				<div class="form-group">
+
+					<div class="btn-group col-sm-offset-2 col-sm-10">
+
+						<button class="btn btn-info js-collapse" type="button"
+							data-toggle="collapse" data-target="#collapseDocumento"
+							aria-expanded="false" aria-controls="collapseDocumento">Documento</button>
+
+						<button class="btn btn-info js-collapse" type="button"
+							data-toggle="collapse" data-target="#collapseEndereco"
+							aria-expanded="false" aria-controls="collapseEndereco">Endereço</button>
+
+						<button class="btn btn-info js-collapse" type="button"
+							data-toggle="collapse" data-target="#collapseContato"
+							aria-expanded="false" aria-controls="collapseContato">Contato</button>
+
+					</div>
+
+				</div>
+
+				<!-- Bloco Documento -->
+				<div class="collapse" id="collapseDocumento">
+
+					<div class="form-group">
+						<label for="tipoDocIdentidade" class="col-sm-2 control-label">Tipo
+							documento</label>
+						<div class="col-sm-3">
+							<select class="form-control" name="tipoDocIdentidade"
+								th:field="*{tipoDocIdentidade}">
+								<option
+									th:each="tiposDocIdentidade : ${todosTiposDocIdentidade}"
+									th:value="${tiposDocIdentidade}"
+									th:text="${tiposDocIdentidade.descricao}"></option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group"
+						th:classappend="${#fields.hasErrors('numDocIdentidade')} ? has-error">
+						<label for="numDocIdentidade" class="col-sm-2 control-label">Número
+							documento</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="numDocIdentidade"
+								th:field="*{numDocIdentidade}" />
+						</div>
+					</div>
+
+					<div class="form-group"
+						th:classappend="${#fields.hasErrors('orgaoExpedidor')} ? has-error">
+						<label for="orgaoExpedidor" class="col-sm-2 control-label">Órgão
+							expedidor</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="orgaoExpedidor"
+								th:field="*{orgaoExpedidor}" />
+						</div>
+					</div>
+
+				</div>
+				<!-- FIM - Bloco Documento -->
+
+				<!-- Bloco Endereço -->
+				<div class="collapse" id="collapseEndereco">
+
+					<div class="form-group"
+						th:classappend="${#fields.hasErrors('endereco')} ? has-error">
+						<label for="endereco" class="col-sm-2 control-label">Endereço</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="endereco"
+								th:field="*{endereco}" />
+						</div>
+					</div>
+
+					<div class="form-group"
+						th:classappend="${#fields.hasErrors('bairro')} ? has-error">
+						<label for="bairro" class="col-sm-2 control-label">Bairro</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="bairro"
+								th:field="*{bairro}" />
+						</div>
+					</div>
+
+					<div class="form-group"
+						th:classappend="${#fields.hasErrors('cidade')} ? has-error">
+						<label for="cidade" class="col-sm-2 control-label">Cidade</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="cidade"
+								th:field="*{cidade}" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="uf" class="col-sm-2 control-label">UF</label>
+						<div class="col-sm-3">
+							<select class="form-control" name="uf" th:field="*{uf}">
+								<option th:each="UFs : ${todasUFs}" th:value="${UFs}"
+									th:text="${UFs.descricao}"></option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group"
+						th:classappend="${#fields.hasErrors('cep')} ? has-error">
+						<label for="cep" class="col-sm-2 control-label">CEP</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="cep"
+								th:field="*{cep}" />
+						</div>
+					</div>
+
+				</div>
+				<!-- FIM - Bloco Endereço -->
+
+				<!-- Bloco Contato -->
+				<div class="collapse" id="collapseContato">
+
+					<div class="form-group"
+						th:classappend="${#fields.hasErrors('foneFixo')} ? has-error">
+						<label for="foneFixo" class="col-sm-2 control-label">Telefone
+							fixo</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="foneFixo"
+								th:field="*{foneFixo}" />
+						</div>
+					</div>
+
+					<div class="form-group"
+						th:classappend="${#fields.hasErrors('foneCelular')} ? has-error">
+						<label for="foneCelular" class="col-sm-2 control-label">Celular</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="foneCelular"
+								th:field="*{foneCelular}" />
+						</div>
+					</div>
+
+					<div class="form-group"
+						th:classappend="${#fields.hasErrors('foneRecado')} ? has-error">
+						<label for="foneRecado" class="col-sm-2 control-label">Telefone
+							recado</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="foneRecado"
+								th:field="*{foneRecado}" />
+						</div>
+					</div>
+
+					<div class="form-group"
+						th:classappend="${#fields.hasErrors('foneEmergencia')} ? has-error">
+						<label for="foneEmergencia" class="col-sm-2 control-label">Telefone
+							emergência</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="foneEmergencia"
+								th:field="*{foneEmergencia}" />
+						</div>
+					</div>
+
+					<div class="form-group"
+						th:classappend="${#fields.hasErrors('email')} ? has-error">
+						<label for="email" class="col-sm-2 control-label">E-mail</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="email"
+								th:field="*{email}" />
+						</div>
+					</div>
+
+				</div>
+				<!-- FIM - Bloco Contato -->
+
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<div class="checkbox">
+							<label> <input type="checkbox" 
+								id="completo" th:field="*{completo}" /> Cadastro completo
+							</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-primary">Salvar</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</form>
+</section>
+</html>
