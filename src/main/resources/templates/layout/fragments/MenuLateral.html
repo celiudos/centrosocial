@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:iaff="http://csiaff.iaff.org">
+	
+<body>
+<aside class="aw-layout-sidebar  js-sidebar" th:fragment="layout-sidebar">
+	<div class="aw-layout-sidebar__content">
+
+    	<nav class="aw-menu  js-menu">
+      		<ul class="aw-menu__list">
+
+        		<li class="aw-menu__item" iaff:menu="@{/estatisticas}">
+          			<a th:href="@{/}"><i class="fa  fa-fw  fa-home"></i><span>Estatísticas</span></a>
+        		</li>
+        		
+        		<li class="aw-menu__item">
+          			<a href="#">
+            			<i class="fa  fa-fw  fa-credit-card"></i><span>Atendimento</span>
+            			<i class="aw-menu__navigation-icon  fa"></i>
+          			</a>
+      
+          			<ul class="aw-menu__list  aw-menu__list--sublist">
+			            <li class="aw-menu__item  aw-menu__item--link" iaff:menu="@{/prontuarios}">
+			            	<a th:href="@{/}">Prontuário</a>
+			            </li>
+			            
+			            <li class="aw-menu__item  aw-menu__item--link" iaff:menu="@{/pacientes}">
+			            	<a th:href="@{/}">Pesquisa de pacientes</a>
+			            </li>
+			        </ul>
+			    </li>
+			    
+        		<li class="aw-menu__item">
+          			<a href="#">
+            			<i class="fa  fa-fw  fa-calendar"></i><span>Agendamento</span>
+            			<i class="aw-menu__navigation-icon  fa"></i>
+          			</a>
+      
+          			<ul class="aw-menu__list  aw-menu__list--sublist">
+			            <li class="aw-menu__item  aw-menu__item--link" iaff:menu="@{/marcacao}">
+			            	<a th:href="@{/}">Marcação</a>
+			            </li>
+			            <li class="aw-menu__item  aw-menu__item--link" iaff:menu="@{/espera}">
+			            	<a th:href="@{/}">Lista de espera</a>
+			            </li>
+          			</ul>
+        		</li> 			    
+
+        		<li class="aw-menu__item">
+          			<a href="#">
+            			<i class="fa  fa-fw  fa-database"></i><span>Cadastros</span>
+            			<i class="aw-menu__navigation-icon  fa"></i>
+          			</a>
+
+          			<ul class="aw-menu__list  aw-menu__list--sublist">
+			            <li class="aw-menu__item  aw-menu__item--link" iaff:menu="@{/cidades}">
+			            	<a th:href="@{/cidades}">Cidades</a>
+			            </li>
+			            <li class="aw-menu__item  aw-menu__item--link" iaff:menu="@{/usuarios}">
+			            	<a th:href="@{/usuarios}">Usuários</a>
+			            </li>
+			            <li class="aw-menu__item  aw-menu__item--link" iaff:menu="@{/pessoas}">
+			            	<a th:href="@{/pessoas}">Pessoas</a>
+			            </li>
+
+			            <li class="aw-menu__item  aw-menu__item--link" iaff:menu="@{/profissionais}">
+			            	<a th:href="@{/}">Profissionais</a>
+			            </li>
+
+			            <li class="aw-menu__item  aw-menu__item--link" iaff:menu="@{/pacientes}">
+			            	<a th:href="@{/}">Pacientes</a>
+			            </li>			            
+			            
+          			</ul>
+        		</li>
+
+      		</ul>
+    	</nav>
+	</div>
+</aside>
+</body>
+</html>

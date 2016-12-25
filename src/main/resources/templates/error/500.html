@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/LayoutSimples">
+	
+<th:block layout:fragment="conteudo">
+	<div class="aw-error-panel">
+		<h1 class="aw-error-panel__code">
+			<i class="fa  fa-exclamation-triangle"></i> 500
+		</h1>
+		
+		<h2 class="aw-error-panel__title">Erro no servidor</h2>
+		
+		<div class="aw-error-panel__description">
+		    O servidor Web encontrou uma condição inesperada que o impediu de processar a sua requisição.
+		    Este erro somente pode ser resolvido por remendos no software. 
+			Entre em contato com o Administrador para reportar o problema.
+			<br/><br/>
+			<a href="javascript:history.back()" class="btn  btn-primary">Voltar para onde estava</a>
+		</div>
+	</div>
+
+</th:block>
+</html>

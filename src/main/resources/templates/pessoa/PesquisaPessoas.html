@@ -1,91 +1,104 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorator="/layout/LayoutPadrao">
-    
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/LayoutPadrao"
+	xmlns:iaff="http://csiaff.iaff.org"
+	xmlns:data="http://www.thymeleaf.org/extras/data">
+	
 <head>
 	<title>Pesquisa de pessoas</title>
 </head>
 
+<body>
 <section layout:fragment="conteudo">
-	<div layout:include="/mensagem/MensagemGeral"></div>
-
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<div class="clearfix">
-	   			<h1 class="panel-title aw-titulo-panel"><strong>Pesquisa de pessoas</strong></h1>
-	   			<a class="btn btn-link aw-link-panel" th:href="@{/pessoas/novo}">Nova pessoa</a>
-	   		</div>
-	   	</div>
-	   	
-	   	<div class="panel-body">
-	   		<form method="GET" class="form-horizontal" th:action="@{/pessoas}" th:object="${filtro}">
-	   			<div class="form-group">
-	   				<div class="col-sm-4">
-	   					<div class="input-group">
-	   						<input class="form-control" placeholder="Qual pessoa você está procurando?"
-	   							autofocus="autofocus" th:field="*{nome}"></input>
-	   						<span class="input-group-btn">
-	   							<button type="submit" class="btn btn-default">
-	   								<i class="glyphicon glyphicon-search"></i>
-	   							</button>
-	   						</span>
-	   					</div>
-	   				</div>
-	   			</div>
-	   		</form>
-	   		
-	   		<div class="table-responsive">
-		   		<table class="table table-bordered table-striped">
-		   			<thead>
-		   				<tr>
-		   					<th class="text-center col-md-1">#</th>
-		   					<th>Nome</th>
-		   					<th class="text-center col-md-2">Data de nascimento</th>
-		   					<th class="text-center col-md-1">Sexo</th>
-		   					<th class="text-center col-md-3">Cadastro</th>
-		   					<th class="col-md-1"></th>
-		   				</tr>
-		   			</thead>
-		   			<tbody>
-		   				<tr th:each="pessoa : ${pessoas}">
-		   					<td class="text-center" th:text="${pessoa.idPessoa}">1</td>
-		   					<td th:text="${pessoa.nome}"></td>
-		   					<td class="text-center" th:text="${{pessoa.dataNascimento}}"></td>
-		   					<td class="text-center" th:text="${pessoa.sexo}"></td>
-		   					<td class="text-center" th:attr="data-role=${pessoa.idPessoa}">
-		   						<span class="label" th:text="${pessoa.completo ? 'Completo' : 'Pendente'}"
-		   							th:classappend="${pessoa.completo ? 'label-success' : 'label-danger'}"></span>
-		   					</td>
-		   					<td class="text-center">
-		   						<a class="btn btn-link btn-xs" th:href="@{/pessoas/{idPessoa}(idPessoa=${pessoa.idPessoa})}" 
-		   								title="Editar" rel="tooltip" data-placement="top">
-		   							<span class="glyphicon glyphicon-pencil"></span>
-		   						</a>
-		   						<a class="btn btn-link btn-xs" data-toggle="modal" data-target="#confirmacaoExclusaoModal"
-		   								th:attr="data-codigo=${pessoa.idPessoa}, data-descricao=${pessoa.nome}"
-		   								title="Excluir" rel="tooltip" data-placement="top">
-		   							<span class="glyphicon glyphicon-remove"></span>
-		   						</a>
-		   						<a class="btn btn-link btn-xs js-atualizar-status" th:if="${!pessoa.completo}"
-		   								title="Concluir cadastro" rel="tooltip" data-placement="top"
-		   								th:attr="data-codigo=${pessoa.idPessoa}"
-		   								th:href="@{/pessoas/{codigo}/mudarstatus(codigo=${pessoa.idPessoa})}">
-		   							<span class="glyphicon glyphicon-check"></span>
-		   						</a>
-		   					</td>
-		   				</tr>
-		   				<tr>
-		   					<td colspan="6" th:if="${#lists.isEmpty(pessoas)}">Nenhuma pessoa foi encontrada</td>
-		   				</tr>
-		   			</tbody>
-		   		</table>
-		   	</div>
-	   	</div>
-	   	
-	   	<div layout:include="/mensagem/DialogoConfirmacaoExclusao"></div>
-	   	
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-10">
+					<h1>Pesquisa de pessoas</h1>
+				</div>
+				
+				<div class="col-sm-2">
+					<div class="aw-page-header-controls">
+						<a class="btn  btn-default" th:href="@{/pessoas/nova}">
+							<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Nova pessoa</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="container-fluid">
+		<form method="GET" th:object="${pessoaFilter}" th:action="@{/pessoas}">
+			<div class="row">
+				<div class="form-group  col-sm-8">
+					<label class="control-label" for="nome">Nome</label>
+					<input type="text" class="form-control" id="nome" autofocus="autofocus" th:field="*{nome}"/>
+				</div>
+				
+				<div class="form-group  col-sm-4">
+					<label for="numeroDocumento" class="control-label">Número do documento</label>
+					<input type="text" class="form-control" id="numeroDocumento" th:field="*{numeroDocumento}"/>
+				</div>
+			</div>
+			
+			<button type="submit" class="btn  btn-primary">Pesquisar</button>
+		</form>
+		
+		<div class="table-responsive  bw-tabela-simples">
+			<table class="table  table-hover">
+				<thead>
+					<tr>
+						<th class="table-pessoas-col-nome">
+							<iaff:order page="${pagina}" field="nome" text="Nome"/>
+						</th>
+						<th class="table-pessoas-col-tipo-documento">
+							<iaff:order page="${pagina}" field="tipoDocumento" text="Documento"/>
+						</th>
+						<th class="table-pessoas-col-documento">Número</th>
+						<th class="table-pessoas-col-telefone">Telefone</th>
+						<th class="table-pessoas-col-cidade-estado">Cidade/Estado</th>
+						<th class="table-pessoas-col-cadastro">
+							<iaff:order page="${pagina}" field="completo" text="Cadastro"/>
+						</th>
+						<th class="table-col-acoes"></th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr th:each="pessoa : ${pagina.conteudo}">
+						<td th:text="${pessoa.nome}"></td>
+						<td class="text-center" th:text="${pessoa.tipoDocumento.descricao}">Física</td>
+						<td class="text-right" th:text="${pessoa.numeroDocumento}">111.111.111-11</td>
+						<td class="text-right" th:text="${pessoa.telefone}">(11) 99999-9999</td>
+						<td class="text-right" th:text="${pessoa.endereco.nomeCidadeSiglaEstado}"></td>
+						<td class="text-center">
+	   						<span class="label" th:text="${pessoa.completo ? 'Completo' : 'Pendente'}"
+	   							th:classappend="${pessoa.completo ? 'label-success' : 'label-danger'}"></span>
+	   					</td>
+						<td class="text-center">
+							<a class="btn  btn-link  btn-xs js-tooltip" title="Editar" th:href="@{/pessoas/{codigo}(codigo=${pessoa.codigo})}"> 
+								<i class="glyphicon glyphicon-pencil"></i>
+							</a>
+							<a class="btn  btn-link  btn-xs  js-tooltip  js-exclusao-btn" title="Excluir" href="#" 
+									data:url="@{/pessoas/{codigo}(codigo=${pessoa.codigo})}"
+									data:objeto="${pessoa.nome}">
+								<i class="glyphicon glyphicon-remove"></i>
+							</a>							
+						</td>
+					</tr>
+					<tr th:if="${pagina.vazia}">
+						<td colspan="5">Nenhuma pessoa encontrada</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<iaff:pagination page="${pagina}"/>	
+		
 	</div>
 </section>
+</body>
 </html>
