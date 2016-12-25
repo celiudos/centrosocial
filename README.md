@@ -17,3 +17,4 @@ O presente projeto tem por objetivo o desenvolvimento de sistema para dar suport
 * Importe os arquivos como **Existing Maven Projects**.
 * Crie um esquema denominado **iaff** no banco de dados MySQL: usuário **root**, senha em branco.
 * Rode a aplicação.
+* Faça o login com o e-mail **admin@iaff.org** e senha **admin**
