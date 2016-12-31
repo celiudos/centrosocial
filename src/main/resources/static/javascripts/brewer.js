@@ -66,7 +66,9 @@ Brewer.MaskDate = (function() {
 			orientation: 'bottom',
 			language: 'pt-BR',
 			autoclose: true
-		});
+		}).on('hide.bs.modal', function(event) {
+		    event.stopPropagation();
+		}); // https://github.com/uxsolutions/bootstrap-datepicker/issues/978
 	}
 	
 	return MaskDate;

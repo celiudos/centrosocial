@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+	<div class="modal fade" id="cadastroRapidoPessoa" tabindex="-1" role="dialog"  th:fragment="cadastroRapidoPessoa">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Cadastro de pessoa</h4>
+				</div>
+				
+				<div class="modal-body">
+					<div class="alert  alert-danger  hidden  js-mensagem-cadastro-rapido-pessoa" role="alert"></div>
+					
+					<form class="form" th:action="@{/pessoas}">
+						
+						<div class="row">
+							<div class="form-group  col-sm-12  bw-required">
+								<label for="nomePessoaCadastro" class="control-label">Nome</label>
+								<input id="nomePessoaCadastro" type="text" class="form-control" />
+							</div>
+						</div>
+						
+						<div class="row">
+						
+							<div class="form-group  col-sm-4  bw-required">
+								<label for="sexoCadastro" class="control-label">Sexo</label>
+								<div>
+									<select class="form-control" id="sexoCadastro">
+										<option value="M">Masculino</option>
+										<option value="F">Feminino</option>
+									</select>
+								</div>
+							</div>
+							
+							<div class="form-group  col-sm-4  bw-required">
+								<label for="dataNascimentoCadastro" class="control-label">Data de nascimento</label>
+								<input type="text" class="form-control  js-date" id="dataNascimentoCadastro"/>
+							</div>
+							
+							<div class="form-group  col-sm-4  bw-required">
+								<label for="telefoneCadastro" class="control-label">Telefone</label>
+								<input type="text" class="form-control  js-phone-number" id="telefoneCadastro"/>
+							</div>			
+						
+						</div>			
+						
+						<button type="button" class="btn  btn-primary  js-modal-cadastro-pessoa-salvar-btn">Salvar</button>
+						<button type="button" class="btn  btn-default" data-dismiss="modal">Cancelar</button>						
+						
+					</form>
+					
+			        <div id="containerTabelaCadastroRapidoPessoa">
+			        </div>
+					
+				</div>
+			</div>
+		</div>
+		
+		<th:block th:replace="hbs/TabelaCadastroRapidoPessoa"></th:block>
+	</div>
+
+</html>

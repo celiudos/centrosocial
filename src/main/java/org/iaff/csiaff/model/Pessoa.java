@@ -2,6 +2,7 @@ package org.iaff.csiaff.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -27,6 +28,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import org.hibernate.validator.group.GroupSequenceProvider;
 import org.iaff.csiaff.model.validation.group.CpfGroup;
+import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -45,11 +47,13 @@ public class Pessoa implements Serializable {
 
 	@NotBlank(message = "Nome é obrigatório")
 	private String nome;
-	
+
+	@NotNull(message = "Obrigatório informar o sexo")
 	@Column(length = 1)
 	@Enumerated(EnumType.STRING)
 	private Sexo sexo;
 	
+	@NotNull(message = "Data de nascimento obrigatória")
 	@Column(name = "data_nascimento")
 	private LocalDate dataNascimento;
 	
@@ -72,16 +76,17 @@ public class Pessoa implements Serializable {
 	
 	private String profissao;
 	
-	@NotNull(message = "Tipo pessoa é obrigatório")
-	@Enumerated(EnumType.STRING)
+	//@NotNull(message = "Tipo de documento é obrigatório")
+	@Enumerated(EnumType.ORDINAL)
 	@Column(name = "tipo_documento")
 	private TipoDocumento tipoDocumento;
 
-	@NotBlank(message = "Documento obrigatório")
+	//@NotBlank(message = "Documento obrigatório")
 	@CPF(groups = CpfGroup.class)
 	@Column(name = "numero_documento")
 	private String numeroDocumento;
 
+	@NotBlank(message = "Obrigatório informar o telefone")
 	private String telefone;
 
 	@Email(message = "E-mail inválido")
@@ -97,12 +102,13 @@ public class Pessoa implements Serializable {
 	
 	@PrePersist @PreUpdate
 	private void prePersistPreUpdate() {
-		this.numeroDocumento = TipoDocumento.removerFormatacao(this.numeroDocumento);
+			this.numeroDocumento = retornaNumeroDocumentoSemFormatacao();
 	}
 	
 	@PostLoad
 	private void postLoad() {
-		this.numeroDocumento = this.tipoDocumento.formatar(this.numeroDocumento);
+		if(!StringUtils.isEmpty(this.numeroDocumento))
+			this.numeroDocumento = this.tipoDocumento.formatar(this.numeroDocumento);
 	}
 
 	public Long getCodigo() {
@@ -161,10 +167,6 @@ public class Pessoa implements Serializable {
 		this.endereco = endereco;
 	}
 
-	public String getNumeroDocumentoSemFormatacao() {
-		return TipoDocumento.removerFormatacao(this.numeroDocumento);
-	}
-	
 	public boolean isNova() {
 		return codigo == null;
 	}
@@ -185,6 +187,11 @@ public class Pessoa implements Serializable {
 		this.dataNascimento = dataNascimento;
 	}
 
+	public void setDataNascimento(String dataNascimento) {
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	    this.dataNascimento = LocalDate.parse(dataNascimento,formatter);
+	}
+	
 	public Estado getEstadoNascimento() {
 		return estadoNascimento;
 	}
@@ -247,6 +254,23 @@ public class Pessoa implements Serializable {
 
 	public void setCompleto(boolean completo) {
 		this.completo = completo;
+	}
+	
+	public String getTipoComDocumento () {
+		if(!StringUtils.isEmpty(this.numeroDocumento)) {
+			return this.tipoDocumento.getDocumento() + " / " + this.numeroDocumento;
+		}
+		
+		return null;
+	}
+
+	public String getDataNascimentoString () {
+		return "" + this.dataNascimento.getDayOfMonth() + "/" + this.dataNascimento.getMonthValue() + "/" + this.dataNascimento.getYear();  
+		// return "" + this.dataNascimento.getDayOfMonth() + "/" + this.dataNascimento.getMonthOfYear() + "/" + this.dataNascimento.getYear();
+	}
+	
+	public String retornaNumeroDocumentoSemFormatacao() {
+		return TipoDocumento.removerFormatacao(this.numeroDocumento);
 	}
 	
 	@Override

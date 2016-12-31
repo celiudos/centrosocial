@@ -12,6 +12,7 @@ import org.iaff.csiaff.service.CadastroUsuarioService;
 import org.iaff.csiaff.service.StatusUsuario;
 import org.iaff.csiaff.service.exception.EmailUsuarioJaCadastradoException;
 import org.iaff.csiaff.service.exception.ImpossivelExcluirEntidadeException;
+import org.iaff.csiaff.service.exception.PessoaObrigatoriaException;
 import org.iaff.csiaff.service.exception.SenhaObrigatoriaUsuarioException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -65,6 +66,9 @@ public class UsuariosController {
 			return novo(usuario);
 		} catch (SenhaObrigatoriaUsuarioException e) {
 			result.rejectValue("senha", e.getMessage(), e.getMessage());
+			return novo(usuario);
+		} catch (PessoaObrigatoriaException e) {
+			result.rejectValue("pessoa", e.getMessage(), e.getMessage());
 			return novo(usuario);
 		}
 		

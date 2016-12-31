@@ -31,7 +31,7 @@ public class ConfigApplication extends WebMvcConfigurerAdapter {
 
 		NumberStyleFormatter integerFormatter = new NumberStyleFormatter("#,##0");
 		registry.addFormatterForFieldType(Integer.class, integerFormatter);
-
+		
 		DateTimeFormatterRegistrar dateTimeFormatter = new DateTimeFormatterRegistrar();
 		dateTimeFormatter.setDateFormatter(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		dateTimeFormatter.setTimeFormatter(DateTimeFormatter.ofPattern("HH:mm"));

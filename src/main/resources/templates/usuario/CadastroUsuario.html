@@ -61,9 +61,15 @@
 				      	placeholder="Clique na lupa para pesquisar a pessoa"/>
 				      <input id="codigoPessoa" type="hidden" th:field="*{pessoa}"/>
 				      <span class="input-group-btn">
+				      
 				        <button class="btn  btn-default  js-tooltip" type="button" title="Pesquisa avançada"
 				        		data-toggle="modal" data-target="#pesquisaRapidaPessoas">
 				        	<i class="glyphicon  glyphicon-search"></i>
+				        </button>
+
+				        <button class="btn  btn-default  js-tooltip" type="button" title="Cadastro rápido de pessoa"
+				        		data-toggle="modal" data-target="#cadastroRapidoPessoa">
+				        	<i class="glyphicon glyphicon-user"></i>
 				        </button>
 				      </span>
 				    </div>
@@ -110,12 +116,14 @@
 	</div>
 	
 		<th:block th:replace="pessoa/PesquisaRapidaPessoas :: pesquisaRapidaPessoas"></th:block>
+		<th:block th:replace="pessoa/CadastroRapidoPessoa :: cadastroRapidoPessoa"></th:block>
 </section>
 
 <th:block layout:fragment="javascript-extra">
 	<script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
 	<script th:src="@{/javascripts/vendors/handlebars.min.js}"></script>
 	<script th:src="@{/javascripts/pessoa.pesquisa-rapida.js}"></script>
+	<script th:src="@{/javascripts/pessoa.cadastro-rapido.js}"></script>
 	<script>
 		$('.js-status').bootstrapSwitch();
 	</script>

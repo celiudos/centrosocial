@@ -18,13 +18,18 @@ public class CadastroPessoaService {
 	private Pessoas pessoas;
 	
 	@Transactional
-	public void salvar(Pessoa pessoa) {
-		Optional<Pessoa> pessoaExistente = pessoas.findByNumeroDocumento(pessoa.getNumeroDocumentoSemFormatacao());
-		if (pessoaExistente.isPresent() && !pessoaExistente.get().equals(pessoa)) {
-			throw new NumeroDocumentoJaCadastradoException("Número de documento já cadastrado");
+	public Pessoa salvar(Pessoa pessoa) {
+		
+		if(pessoa.getNumeroDocumento() != null){
+		
+			Optional<Pessoa> pessoaExistente = pessoas.findByNumeroDocumento(pessoa.retornaNumeroDocumentoSemFormatacao());
+			if (pessoaExistente.isPresent() && !pessoaExistente.get().equals(pessoa)) {
+				throw new NumeroDocumentoJaCadastradoException("Número de documento já cadastrado");
+			}
+		
 		}
 		
-		pessoas.save(pessoa);
+		return pessoas.save(pessoa);
 	}
 	
 	@Transactional

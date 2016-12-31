@@ -6,6 +6,7 @@ import org.iaff.csiaff.model.Usuario;
 import org.iaff.csiaff.repository.Usuarios;
 import org.iaff.csiaff.service.exception.EmailUsuarioJaCadastradoException;
 import org.iaff.csiaff.service.exception.ImpossivelExcluirEntidadeException;
+import org.iaff.csiaff.service.exception.PessoaObrigatoriaException;
 import org.iaff.csiaff.service.exception.SenhaObrigatoriaUsuarioException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -45,8 +46,13 @@ public class CadastroUsuarioService {
 			usuario.setAtivo(usuarioExistente.get().getAtivo());
 		}
 		
+		// pessoa é opcional para usuario Admin
 		if(usuario.getPessoa().getCodigo() == null){
-			usuario.setPessoa(null);
+			if(usuario.getNome().equals("Admin")){
+				usuario.setPessoa(null);
+			} else {
+				throw new PessoaObrigatoriaException("Obrigatório informar a Pessoa");
+			}
 		}
 		
 		usuarios.save(usuario);

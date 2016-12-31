@@ -24,8 +24,12 @@ Iaff.MascaraDocumento = (function() {
 	
 	function aplicarMascara(tipoDocumentoSelecionado) {
 		this.labelNumeroDocumento.text(tipoDocumentoSelecionado.data('documento'));
-		this.inputNumeroDocumento.mask(tipoDocumentoSelecionado.data('mascara'));
-		this.inputNumeroDocumento.removeAttr('disabled');
+		if(tipoDocumentoSelecionado.data('documento') != "Documento"){
+			this.inputNumeroDocumento.mask(tipoDocumentoSelecionado.data('mascara'));
+			this.inputNumeroDocumento.removeAttr('disabled');
+		} else {
+			this.inputNumeroDocumento.attr('disabled','disabled');
+		}
 	}
 	
 	return MascaraDocumento;

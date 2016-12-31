@@ -2,6 +2,7 @@ package org.iaff.csiaff.model;
 
 public enum EstadoCivil {
 
+	NI("Não informado"),
 	SO("Solteiro"),
 	CA("Casado"),
 	SE("Separado"),

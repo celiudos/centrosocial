@@ -2,7 +2,7 @@ package org.iaff.csiaff.model;
 
 public enum Escolaridade {
 
-	E01("Não informada"),
+	NI("Não informada"),
 	E02("Não alfabetizado"),
 	E03("Lê e escreve"),
 	E04("Ensino Fundamental completo"),

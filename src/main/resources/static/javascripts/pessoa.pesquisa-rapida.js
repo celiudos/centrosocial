@@ -15,26 +15,37 @@ Brewer.PesquisaRapidaPessoa = (function() {
 	PesquisaRapidaPessoa.prototype.iniciar = function() {
 		this.pesquisaRapidaBtn.on('click', onPesquisaRapidaClicado.bind(this));
 		this.pesquisaRapidaPessoasModal.on('shown.bs.modal', onModalShow.bind(this));
-
+		this.pesquisaRapidaPessoasModal.on('hide.bs.modal', onModalClose.bind(this));
 	}
 	
 	function onModalShow() {
 		this.nomeInput.focus();
 	}
 	
+	function onModalClose() {
+		this.nomeInput.val('');
+		this.mensagemErro.addClass('hidden');
+		this.containerTabelaPesquisa.html("");
+	}	
+	
 	function onPesquisaRapidaClicado(event) {
 		event.preventDefault();
 		
-		$.ajax({
-			url: this.pesquisaRapidaPessoasModal.find('form').attr('action'),
-			method: 'GET',
-			contentType: 'application/json',
-			data: {
-				nome: this.nomeInput.val()
-			}, 
-			success: onPesquisaConcluida.bind(this),
-			error: onErroPesquisa.bind(this)
-		});
+		if(this.nomeInput.val().length >= 3) {
+		
+			$.ajax({
+				url: this.pesquisaRapidaPessoasModal.find('form').attr('action'),
+				method: 'GET',
+				contentType: 'application/json',
+				data: {
+					nome: this.nomeInput.val()
+				}, 
+				success: onPesquisaConcluida.bind(this),
+				error: onErroPesquisa.bind(this)
+			});
+			
+		} else onErroPesquisa.call(this);
+	
 	}
 	
 	function onPesquisaConcluida(resultado) {

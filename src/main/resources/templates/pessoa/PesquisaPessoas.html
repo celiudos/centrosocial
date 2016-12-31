@@ -57,7 +57,7 @@
 						<th class="table-pessoas-col-tipo-documento">
 							<iaff:order page="${pagina}" field="tipoDocumento" text="Documento"/>
 						</th>
-						<th class="table-pessoas-col-documento">Número</th>
+						<th class="table-pessoas-col-documento">Nascimento</th>
 						<th class="table-pessoas-col-telefone">Telefone</th>
 						<th class="table-pessoas-col-cidade-estado">Cidade/Estado</th>
 						<th class="table-pessoas-col-cadastro">
@@ -70,10 +70,15 @@
 				<tbody>
 					<tr th:each="pessoa : ${pagina.conteudo}">
 						<td th:text="${pessoa.nome}"></td>
-						<td class="text-center" th:text="${pessoa.tipoDocumento.descricao}">Física</td>
-						<td class="text-right" th:text="${pessoa.numeroDocumento}">111.111.111-11</td>
+						<!-- 
+						<td class="text-center" th:text="${pessoa.tipoDocumento} != null ? ${#strings.concat(pessoa.tipoDocumento.documento,' / ',pessoa.numeroDocumento)}">CPF</td>
+						<td class="text-right"  th:text="${pessoa.dataNascimento} != null ? ${#dates.format(#strings.replace(pessoa.dataNascimento,'-','/'),'dd/MM/yyyy')}">06/10/1970</td>
+						-->
+						<td class="text-center" th:text="${pessoa.tipoComDocumento}">CPF / 561.183.841.34</td>
+						<td class="text-right"  th:text="${pessoa.dataNascimentoString}">06/10/1970</td>
+						
 						<td class="text-right" th:text="${pessoa.telefone}">(11) 99999-9999</td>
-						<td class="text-right" th:text="${pessoa.endereco.nomeCidadeSiglaEstado}"></td>
+						<td class="text-right" th:text="${pessoa.endereco} != null ? ${pessoa.endereco.nomeCidadeSiglaEstado}"></td>
 						<td class="text-center">
 	   						<span class="label" th:text="${pessoa.completo ? 'Completo' : 'Pendente'}"
 	   							th:classappend="${pessoa.completo ? 'label-success' : 'label-danger'}"></span>

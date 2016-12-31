@@ -7,6 +7,12 @@ public enum TipoDocumento {
 
 	// http://turing.com.br/material/regex/introducao.html
 	// https://support.office.com/pt-br/article/Controlar-formatos-de-entrada-de-dados-com-m%C3%A1scaras-de-entrada-e125997a-7791-49e5-8672-4a47832de8da#__toc292266520
+	NI("Não informado", "Documento", "", OutrosGroup.class) {
+		@Override
+		public String formatar(String numeroDocumento) {
+			return numeroDocumento;
+		}
+	},
 	CPF("CPF", "CPF", "000.000.000-00", CpfGroup.class) {
 		@Override
 		public String formatar(String numeroDocumento) {
@@ -51,8 +57,6 @@ public enum TipoDocumento {
 		}
 	};
 
-
-
 	private String descricao;
 	private String documento;
 	private String mascara;
@@ -84,7 +88,11 @@ public enum TipoDocumento {
 	}
 	
 	public static String removerFormatacao(String numeroDocumento) {
-		return numeroDocumento.replaceAll("\\.|-|/| ", "").toUpperCase();
+		if(numeroDocumento != null){
+			return numeroDocumento.replaceAll("\\.|-|/| ", "").toUpperCase();
+		}
+		
+		return null;
 	}
 
 }

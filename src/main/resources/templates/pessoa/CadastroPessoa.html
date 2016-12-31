@@ -50,7 +50,7 @@
 			
 			<!-- inicio novos campos -->
 			<div class="row">
-				<div class="form-group  col-sm-2  bw-required">
+				<div class="form-group  col-sm-2  bw-required" iaff:classforerror="sexo">
 					<label for="sexo" class="control-label">Sexo</label>
 					<div>
 						<select class="form-control" name="sexo" th:field="*{sexo}">
@@ -60,7 +60,7 @@
 					</div>
 				</div>
 				
-				<div class="form-group  col-sm-2">
+				<div class="form-group  col-sm-2 bw-required" iaff:classforerror="dataNascimento">
 					<label for="dataNascimento" class="control-label">Data de nascimento</label>
 					<input type="text" class="form-control js-date" id="dataNascimento" th:field="*{dataNascimento}" autocomplete="off"/>
 				</div>
@@ -142,26 +142,13 @@
 			
 			<div class="row">
 
-			    <!--  
-				<div class="form-group  col-sm-4  bw-required" iaff:classforerror="tipoPessoa">
-					<label class="control-label">Tipo pessoa</label>
-					<div>
-						<th:block th:each="tipoPessoa : ${tiposPessoa}">
-							<div class="radio  radio-inline">
-								<input type="radio" th:id="|id_${tipoPessoa}|" class="js-radio-tipo-pessoa" 
-									th:field="*{tipoPessoa}" th:value="${tipoPessoa}" 
-									data:documento="${tipoPessoa.documento}" data:mascara="${tipoPessoa.mascara}" /> 
-								<label class="control-label" th:for="|id_${tipoPessoa}|" th:text="${tipoPessoa.descricao}">Física</label>
-							</div>
-						</th:block>
-					</div>
-				</div>
-				-->
-				
-				<div class="form-group  col-sm-4  bw-required" iaff:classforerror="tipoDocumento">
+				<div class="form-group  col-sm-4">
 					<label class="control-label">Tipo documento</label>
 					<div>
 						<select class="form-control js-select-tipo-documento" name="tipoDocumento" th:field="*{tipoDocumento}">
+							<!--  
+							<option value="Selecione o documento">Selecione o documento</option>
+							-->
 							<option th:each="tipoDocumento : ${tiposDocumentos}" th:value="${tipoDocumento}"
 								th:text="${tipoDocumento.descricao}"
 								th:id="|id_${tipoDocumento}|"  
@@ -170,15 +157,15 @@
 					</div>
 				</div>				
 				
-				<div class="form-group  col-sm-8  bw-required" iaff:classforerror="numeroDocumento">
+				<div class="form-group  col-sm-8" iaff:classforerror="numeroDocumento">
 					<label for="numeroDocumento" class="control-label">Documento</label>
 					<input type="text" class="form-control" id="numeroDocumento" th:field="*{numeroDocumento}" disabled="disabled"/>
 				</div>
 			</div>
 			
 			<div class="row">
-				<div class="form-group  col-sm-4">
-					<label for="telefone">Telefone</label>
+				<div class="form-group  col-sm-4  bw-required" iaff:classforerror="telefone">
+					<label for="telefone" class="control-label">Telefone</label>
 					<input type="text" class="form-control  js-phone-number" id="telefone" th:field="*{telefone}"/>
 				</div>
 				
