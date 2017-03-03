@@ -1,2 +1,0 @@
-INSERT INTO usuario (nome, email, senha, ativo) VALUES ('Admin', 'admin@iaff.org', '$2a$10$g.wT4R0Wnfel1jc/k84OXuwZE02BlACSLfWy6TycGPvvEKvIm86SG', 1);
-INSERT INTO usuario (nome, email, senha, ativo) VALUES ('Fabiano', 'fpschwartz@gmail.com', '$2a$10$4FtI2pNVTzvMDybdwf2u3OLTcNw9.FFxNh72vE6Aj4Qln6p8odjYm', 1);

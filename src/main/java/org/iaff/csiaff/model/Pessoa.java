@@ -22,6 +22,7 @@ import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
@@ -36,6 +37,7 @@ import org.iaff.csiaff.model.validation.PessoaGroupSequenceProvider;
 
 @Entity
 @Table(name = "pessoa")
+@DynamicUpdate
 @GroupSequenceProvider(PessoaGroupSequenceProvider.class)
 public class Pessoa implements Serializable {
 

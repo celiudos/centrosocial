@@ -3,12 +3,17 @@ CREATE TABLE usuario (
     nome VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL,
     senha VARCHAR(120) NOT NULL,
-    ativo BOOLEAN DEFAULT true
+    ativo BOOLEAN DEFAULT true NOT NULL,
+    codigo_pessoa BIGINT(20) NOT NULL,
+    FOREIGN KEY (codigo_pessoa) REFERENCES pessoa(codigo)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE grupo (
     codigo BIGINT(20) PRIMARY KEY,
-    nome VARCHAR(50) NOT NULL
+    nome VARCHAR(50) NOT NULL,
+    codigo_registro BIGINT(20),
+    anamnese BIT(1) NOT NULL DEFAULT FALSE,
+    FOREIGN KEY (codigo_registro) REFERENCES registroprofissional(codigo)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE permissao (

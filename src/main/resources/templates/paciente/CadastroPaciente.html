@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorator="layout/LayoutPadrao"
+	xmlns:iaff="http://csiaff.iaff.org">
+
+<head>
+	<title>Cadastro de paciente</title>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}"/>
+</head>
+
+<section layout:fragment="conteudo">
+
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-10">
+					<h1 th:if="${paciente.novo}">Cadastro de paciente</h1>
+					<h1 th:unless="${paciente.novo}" th:text="${#strings.concat('Edição de paciente: ',paciente.pessoa.nome)}">Edição de paciente</h1>
+				</div>
+				
+				<div class="col-xs-2">
+					<div class="aw-page-header-controls">
+						<a class="btn  btn-default" th:href="@{/pacientes}">
+							<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Pesquisa</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="container-fluid">
+		<form method="POST" th:object="${paciente}" 
+				th:action="${paciente.novo} ? @{/pacientes/novo} : @{/pacientes/{codigo}(codigo=${paciente.codigo})}">
+			<iaff:message/>
+			
+			<input type="hidden" th:field="*{codigo}"/>			
+			
+			<div class="row">
+				<div class="form-group  col-sm-6" iaff:classforerror="pessoa.codigo">
+					<label class="control-label" for="nomePessoa">Pessoa</label>
+					<div class="input-group">
+				      <input id="nomePessoa" type="text" readonly="readonly" class="form-control" th:field="*{pessoa.nome}" 
+				      	placeholder="Clique na lupa para pesquisar a pessoa" />
+				      <input id="codigoPessoa" type="hidden" th:field="*{pessoa}"/>
+				      <span class="input-group-btn">
+				      
+				        <button class="btn  btn-default  js-tooltip" type="button" title="Pesquisa avançada"
+				        		data-toggle="modal" data-target="#pesquisaRapidaPessoas"
+				        		th:classappend="${!paciente.novo} ? disabled">
+				        	<i class="glyphicon  glyphicon-search"></i>
+				        </button>
+
+				        <button class="btn  btn-default  js-tooltip" type="button" title="Cadastro rápido de pessoa"
+				        		data-toggle="modal" data-target="#cadastroRapidoPessoa"
+				        		th:classappend="${!paciente.novo} ? disabled">
+				        	<i class="glyphicon glyphicon-user"></i>
+				        </button>
+				      </span>
+				    </div>
+				</div>
+			</div>			
+			
+			<div class="row">
+				<div class="form-group  col-sm-4" iaff:classforerror="foneAdicional">
+					<label for="foneAdicional" class="control-label">Telefone adicional</label>
+					<input type="text" class="form-control  js-phone-number" id="foneAdicional" th:field="*{foneAdicional}"/>
+				</div>
+			</div>
+			<div class="row">	
+				<div class="form-group  col-sm-4" iaff:classforerror="foneRecado">
+					<label for="foneRecado" class="control-label">Telefone para recado</label>
+					<input type="text" class="form-control  js-phone-number" id="foneRecado" th:field="*{foneRecado}"/>
+				</div>					
+			</div>
+			<div class="row">
+				<div class="form-group  col-sm-4" iaff:classforerror="foneEmergencia">
+					<label for="foneEmergencia" class="control-label">Telefone para emergência</label>
+					<input type="text" class="form-control  js-phone-number" id="foneEmergencia" th:field="*{foneEmergencia}"/>
+				</div>					
+			</div>
+			
+			<button type="submit" class="btn  btn-primary">Salvar</button>
+		</form>
+	</div>
+	
+		<th:block th:replace="pessoa/PesquisaRapidaPessoas :: pesquisaRapidaPessoas"></th:block>
+		<th:block th:replace="pessoa/CadastroRapidoPessoa :: cadastroRapidoPessoa"></th:block>
+</section>
+
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/javascripts/vendors/bootstrap-switch.min.js}"></script>
+	<script th:src="@{/javascripts/vendors/handlebars.min.js}"></script>
+	<script th:src="@{/javascripts/pessoa.pesquisa-rapida.js}"></script>
+	<script th:src="@{/javascripts/pessoa.cadastro-rapido.js}"></script>
+</th:block>
+</html>

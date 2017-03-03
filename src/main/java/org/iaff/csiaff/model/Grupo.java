@@ -3,6 +3,7 @@ package org.iaff.csiaff.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -28,6 +31,19 @@ public class Grupo implements Serializable {
 	@JoinTable(name = "grupo_permissao", joinColumns = @JoinColumn(name = "codigo_grupo"), inverseJoinColumns = @JoinColumn(name = "codigo_permissao"))
 	private List<Permissao> permissoes;
 
+	// http://blog.triadworks.com.br/jpa-por-que-voce-deveria-evitar-relacionamento-bidirecional
+	@ManyToOne
+	@JoinColumn(name = "codigo_registro")
+	private RegistroProfissional registroprofissional;
+	
+	// indica se o grupo visualizar Anamnese
+	private boolean anamnese;
+		
+	//@OneToMany(cascade = CascadeType.ALL)
+	//@JoinColumn(name = "codigo_grupo")
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="grupo")
+	private List<TipoItemProntuario> tipoitemprontuario;
+	
 	public Long getCodigo() {
 		return codigo;
 	}
@@ -50,6 +66,30 @@ public class Grupo implements Serializable {
 
 	public void setPermissoes(List<Permissao> permissoes) {
 		this.permissoes = permissoes;
+	}
+	
+	public RegistroProfissional getRegistroprofissional() {
+		return registroprofissional;
+	}
+
+	public void setRegistroprofissional(RegistroProfissional registroprofissional) {
+		this.registroprofissional = registroprofissional;
+	}
+	
+	public boolean isAnamnese() {
+		return anamnese;
+	}
+
+	public void setAnamnese(boolean anamnese) {
+		this.anamnese = anamnese;
+	}
+	
+	public List<TipoItemProntuario> getTipoitemprontuario() {
+		return tipoitemprontuario;
+	}
+
+	public void setTipoitemprontuario(List<TipoItemProntuario> tipoitemprontuario) {
+		this.tipoitemprontuario = tipoitemprontuario;
 	}
 
 	@Override
@@ -76,5 +116,4 @@ public class Grupo implements Serializable {
 			return false;
 		return true;
 	}
-
 }

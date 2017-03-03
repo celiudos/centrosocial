@@ -98,12 +98,12 @@
 			</div>
 			
 			<div class="row">
-				<div class="form-group  col-sm-6  bw-required" iaff:classforerror="grupos">
+				<div class="form-group  col-sm-9  bw-required" iaff:classforerror="grupos">
 					<label class="control-label">Grupos</label> 
 					<div>
 						<th:block th:each="grupo : ${grupos}">
-	  						<div class="checkbox  checkbox-inline"> 
-		    					<input type="checkbox" th:value="${grupo.codigo}" th:field="*{grupos}"/>
+	  						<div class="radio  radio-inline"> 
+		    					<input type="radio" th:value="${grupo.codigo}" th:field="*{grupos}"/>
 		    					<label th:for="${#ids.prev('grupos')}" th:text="${grupo.nome}">Administrador</label>
 	    					</div>
 	    				</th:block>

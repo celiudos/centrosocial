@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/LayoutPadrao"
+	xmlns:iaff="http://csiaff.iaff.org"
+	xmlns:data="http://www.thymeleaf.org/extras/data">
+	
+<head>
+	<title>Pesquisa de pacientes</title>
+</head>
+
+<body>
+<section layout:fragment="conteudo">
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-10">
+					<h1>Pesquisa de pacientes</h1>
+				</div>
+				
+				<div class="col-xs-2">
+					<div class="aw-page-header-controls">
+						<a class="btn  btn-default" th:href="@{/pacientes/novo}">
+							<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Novo paciente</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="container-fluid">
+		<form method="GET" th:object="${pacienteFilter}" th:action="@{/pacientes}">
+			<div class="row">
+				<div class="form-group  col-sm-6">
+					<label class="control-label" for="nome">Nome</label>
+					<input type="text" class="form-control" id="nome" autofocus="autofocus" th:field="*{nome}"/>
+				</div>
+			</div>
+			
+			<button type="submit" class="btn  btn-primary">Pesquisar</button>
+		</form>
+		
+		<div class="table-responsive  bw-tabela-simples">
+        	<table class="table  table-hover">
+	            <thead>
+	            	<tr>
+	            		<th>Nome</th>
+	                	<th>Documento</th>
+	                	<th>Fone</th>
+	                	<th>Fone adicional</th>
+	                	<th>Fone recado</th>
+	                	<th>Fone emergência</th>
+	                 	<th class="table-col-acoes"></th>
+					</tr>
+				</thead>
+			
+	            <tbody>
+					<tr th:each="paciente : ${pagina.conteudo}">
+						<td th:text="${paciente.pessoa.nome}"></td>
+						<td th:text="${paciente.pessoa.tipoComDocumento}"></td>
+						<td th:text="${paciente.pessoa.telefone}"></td>
+						<td th:text="${paciente.foneAdicional}"></td>
+						<td th:text="${paciente.foneRecado}"></td>
+						<td th:text="${paciente.foneEmergencia}"></td>
+						
+						<td class="text-center">
+							<a class="btn  btn-link  btn-xs js-tooltip" title="Editar" th:href="@{/pacientes/{codigo}(codigo=${paciente.codigo})}"> 
+								<i class="glyphicon glyphicon-pencil"></i>
+							</a>
+							<a class="btn  btn-link  btn-xs  js-tooltip  js-exclusao-btn" title="Excluir" href="#" 
+									data:url="@{/pacientes/{codigo}(codigo=${paciente.codigo})}"
+									data:objeto="${paciente.pessoa.nome}">
+								<i class="glyphicon glyphicon-remove"></i>
+							</a>							
+						</td>
+
+	                </tr>
+	                
+	                <tr th:if="${pagina.vazia}">
+	                	<td colspan="6">Nenhum pacinete encontrado</td>
+	                </tr>
+	             </tbody>
+         	</table>
+    	 </div>
+    	 
+    	 <iaff:pagination page="${pagina}"/>
+	</div>
+</section>
+</body>
+</html>
