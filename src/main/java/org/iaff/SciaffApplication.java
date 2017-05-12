@@ -14,7 +14,7 @@ public class SciaffApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SciaffApplication.class, args);
 	}
-	
+
 	@Bean
 	public LocaleResolver localeResolver() {
 		return new FixedLocaleResolver(new Locale("pt", "BR"));
