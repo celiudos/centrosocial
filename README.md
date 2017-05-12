@@ -18,3 +18,10 @@ O presente projeto tem por objetivo o desenvolvimento de sistema para dar suport
 * Crie um esquema denominado **iaff** no banco de dados MySQL: usuário **root**, senha em branco.
 * Rode a aplicação.
 * Faça o login com o e-mail **admin@iaff.org** e senha **admin**
+
+### Testando a aplicação (teste de integração)
+
+* Rode a aplicação (banco de dados + servidor).
+* Selecione o arquivo **CadastroPessoaTest.java**.
+* Rode-o com **Run as** -> **JUnit Test**.
+* Após rodar o teste, verifique na aba "**JUnit**" do Eclipse se houve algum erro ou falha. 
